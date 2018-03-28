@@ -1,0 +1,15 @@
+group 'cn.mutils.app'
+version '1.0.0'
+
+apply plugin: 'java'
+apply plugin: 'build.info.collector'
+
+sourceCompatibility = 1.6
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project(":java-test-lib")
+}

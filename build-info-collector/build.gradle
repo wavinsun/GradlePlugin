@@ -1,0 +1,28 @@
+group 'cn.mutils.app'
+version '1.0.0'
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.6
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile gradleApi()
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        name = 'mavenCentralReleaseDeployer'
+        repository(url: "http://maven.xxx.com/nexus/content/repositories/xxx") {
+            authentication(userName: "xxx", password: "xxx")
+        }
+        pom.packaging = 'jar'
+        pom.groupId = "cn.mutils.app"
+        pom.artifactId = "build-info-collector"
+        pom.version = "1.0.0"
+    }
+}

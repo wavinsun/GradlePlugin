@@ -1,0 +1,5 @@
+rootProject.name = 'gradle-plugin'
+include 'build-info-collector'
+include 'java-test-lib'
+include 'java-test-app'
+
