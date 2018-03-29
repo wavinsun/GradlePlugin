@@ -12,9 +12,8 @@ class BuildInfoCollector implements Plugin<Project> {
 
     @Override
     void apply(Project project) {
-        println("BuildInoCollector: ${project.name}");
+        println("BuildInoCollector:${project.name}");
         project.afterEvaluate {
-            println("BuildInoCollector: project.afterEvaluate");
             try {
                 def map = new LinkedHashMap();
                 project.configurations.each {
@@ -27,10 +26,17 @@ class BuildInfoCollector implements Plugin<Project> {
                     map.put(it.name, list);
                 }
                 File jsonFile = project.rootProject.file("build/bulid.info.collector.json");
-                def allMap = jsonFile.exists() ? new JsonSlurper().
-                        parseText(jsonFile.getText()) : new LinkedHashMap();
+                String jsonText = jsonFile.exists() ? jsonFile.getText() : null;
+                def allMap = jsonText != null ? new JsonSlurper().
+                        parseText(jsonText) : new LinkedHashMap();
                 allMap.put(project.name, map);
-                jsonFile.setText(new JsonBuilder(allMap).toPrettyString());
+                String newJsonText = new JsonBuilder(allMap).toPrettyString();
+                if (newJsonText == jsonText) {
+                    println("BuildInfoCollector:build.info.collector.json UP-TO-DATE");
+                } else {
+                    println("BuildInfoCollector:build.info.collector.json");
+                    jsonFile.setText(newJsonText);
+                }
             } catch (Throwable e) {
                 e.printStackTrace();
             }
