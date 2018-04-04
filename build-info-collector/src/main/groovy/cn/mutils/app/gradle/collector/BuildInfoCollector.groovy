@@ -35,7 +35,9 @@ class BuildInfoCollector implements Plugin<Project> {
                     println("BuildInfoCollector:build.info.collector.json UP-TO-DATE");
                 } else {
                     println("BuildInfoCollector:build.info.collector.json");
-                    jsonFile.setText(newJsonText);
+                    jsonFile.withPrintWriter {
+                        it.write(newJsonText);
+                    }
                 }
             } catch (Throwable e) {
                 e.printStackTrace();
